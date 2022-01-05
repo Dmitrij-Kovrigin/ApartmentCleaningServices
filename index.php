@@ -23,7 +23,7 @@ require __DIR__ . '/vendor/autoload.php';
 // App::printDataToCsvFile($data);
 
 // Import entries from CSV file to database:
-// $file = "dataImport.csv";
-// App::importDataToDb($file);
+$file = "dataImport.csv";
+App::importDataToDb($file);
 
 // CLI comand to run an app: php -f index.php, just uncomment the part U are testing :)

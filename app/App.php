@@ -9,6 +9,7 @@ class App
 {
     static $pdo;
     protected $validate;
+    public static $lineCount = 0;
 
     public static function connect_db()
     {
@@ -51,10 +52,22 @@ class App
         $file = fopen($filename, 'r');
 
         while (($getData = fgetcsv($file, 10000, ",")) !== false) {
+
+            self::$lineCount++;
+            $validate = new Validate;
+            $email = $validate->validateEmail($getData[2]);
+            $phone = $validate->validatePhone($getData[3]);
+            $date = $validate->validateDate($getData[5]);
+            $time = $validate->validateTime($getData[6]);
+
+            var_dump($getData[1], $email, $phone, $getData[4], $date, $time);
+
+            self::connect_db();
+
             $sql = "INSERT INTO
             clients
             (`name`, email, phone, `address`, `date`, `time`)
-            VALUES ('$getData[1]', '$getData[2]', '$getData[3]', '$getData[4]', '$getData[5]', '$getData[6]')
+            VALUES ('$getData[1]', '$email', '$phone', '$getData[4]', '$date', '$time')
             ";
 
             $result = self::$pdo->query($sql);
